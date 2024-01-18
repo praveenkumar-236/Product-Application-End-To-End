@@ -33,8 +33,4 @@ public class MongoConfig {
         MongoClient mongoClient = mongoClient();
         return mongoClient.getDatabase(databaseName);
     }
-    // @Bean
-    // public MongoDBClient mongoDBClient() {
-    // return new MongoDBClient(connectionString, databaseName);
-    // }
 }

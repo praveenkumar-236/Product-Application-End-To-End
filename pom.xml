@@ -100,37 +100,7 @@
 				test
 			</scope>
 		</dependency>
-		<!--
-		<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-data-mongodb</artifactId>
-		</dependency>
-		-->
-		<!--
-		<dependency>
-		<groupId>org.springframework.data</groupId>
-		<artifactId>spring-data-mongodb</artifactId>
-		</dependency>
-		-->
-		<dependency>
-			<groupId>
-				org.springframework.boot
-			</groupId>
-			<artifactId>
-				spring-boot-starter-security
-			</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>
-				io.jsonwebtoken
-			</groupId>
-			<artifactId>
-				jjwt
-			</artifactId>
-			<version>
-				0.9.1
-			</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>
 				javax.xml.bind
@@ -253,20 +223,8 @@
 				spring-boot-starter-webflux
 			</artifactId>
 		</dependency>
-		<!--
-		<dependency>
-		<groupId>org.mongodb</groupId>
-		<artifactId>mongodb-driver-sync</artifactId>
-		</dependency>
-		-->
-		<dependency>
-			<groupId>
-				org.springframework.kafka
-			</groupId>
-			<artifactId>
-				spring-kafka
-			</artifactId>
-		</dependency>
+		
+	
 		<dependency>
 			<groupId>
 				org.projectlombok
