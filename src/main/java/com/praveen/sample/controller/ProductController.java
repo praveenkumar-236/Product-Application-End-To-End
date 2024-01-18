@@ -1,42 +1,57 @@
 package com.praveen.sample.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import com.praveen.sample.model.Product;
 import com.praveen.sample.service.ProductService;
-
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/products")
 public class ProductController {
 
+    private final ProductService productService;
+
     @Autowired
-    private ProductService productService;
-
-    @PostMapping("/create/product")
-    public Product saveProduct(@RequestBody Product product) {
-        return productService.saveProduct(product);
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
-    @PutMapping("/update")
-    public Product updateProduct(@RequestBody Product product) {
-        return productService.updateProduct(product);
+    @PostMapping
+    public ResponseEntity<Void> insertProduct(@RequestBody Product product) {
+        productService.insertProduct(product);
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/getAllProducts")
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    @PutMapping("/{productId}")
+    public ResponseEntity<Void> updateProduct(@PathVariable String productId, @RequestBody Product product) {
+        Product existingProduct = productService.getProductById(productId);
+        if (existingProduct != null) {
+            productService.updateProduct(product);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @GetMapping("/getProduct/{productId}")
-    public Product getProduct(@PathVariable(name = "productId") String productId) {
-        return productService.getProduct(productId);
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable String productId) {
+        Product existingProduct = productService.getProductById(productId);
+        if (existingProduct != null) {
+            productService.deleteProduct(productId);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @DeleteMapping("/deleteProduct/{productId}")
-    public void deleteProduct(@PathVariable(name = "productId") String productId) {
-        productService.deleteProduct(productId);
+    @GetMapping("/{productId}")
+    public ResponseEntity<Product> getProductById(@PathVariable String productId) {
+        Product product = productService.getProductById(productId);
+        if (product != null) {
+            return ResponseEntity.ok(product);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

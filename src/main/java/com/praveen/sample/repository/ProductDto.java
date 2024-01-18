@@ -1,8 +1,8 @@
-package com.praveen.sample.service;
+package com.praveen.sample.repository;
 
 import com.praveen.sample.model.Product;
 
-public interface ProductService {
+public interface ProductDto {
     void insertProduct(Product product);
 
     void updateProduct(Product product);
