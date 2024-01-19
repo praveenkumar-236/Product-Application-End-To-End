@@ -1,36 +1,26 @@
 package com.praveen.sample.config;
 
+import com.mongodb.ConnectionString;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoDatabase;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 @Configuration
 public class MongoConfig {
 
     @Value("${spring.data.mongodb.uri}")
-    private String connectionString;
-
-    @Value("${spring.data.mongodb.database}")
-    private String databaseName;
+    private String mongoUri;
 
     @Bean
     public MongoClient mongoClient() {
-        ConnectionString connString = new ConnectionString(connectionString);
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(connString)
-                .build();
-        return MongoClients.create(settings);
+        return MongoClients.create(new ConnectionString(mongoUri));
     }
 
     @Bean
-    public MongoDatabase mongoDatabase() {
-        MongoClient mongoClient = mongoClient();
-        return mongoClient.getDatabase(databaseName);
+    public MongoTemplate mongoTemplate() {
+        return new MongoTemplate(mongoClient(), "mydatabase");
     }
 }

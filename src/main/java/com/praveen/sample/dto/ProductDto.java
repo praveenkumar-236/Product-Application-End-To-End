@@ -1,10 +1,10 @@
-package com.praveen.sample.service;
+package com.praveen.sample.dto;
 
 import java.util.List;
 
 import com.praveen.sample.model.Product;
 
-public interface ProductService {
+public interface ProductDto {
     List<Product> getAllProducts();
     Product getProductById(String id);
     void insertProduct(Product product);

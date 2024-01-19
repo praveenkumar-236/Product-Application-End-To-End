@@ -1,37 +1,36 @@
 package com.praveen.sample.service;
 
-import com.praveen.sample.model.Product;
-import com.praveen.sample.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.praveen.sample.dto.ProductDto;
+import com.praveen.sample.model.Product;
+
+import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private final ProductRepository productRepository;
-
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    private ProductDto productDto;
+
+    @Override
+    public List<Product> getAllProducts() {
+        return productDto.getAllProducts();
+    }
+
+    @Override
+    public Product getProductById(String id) {
+        return productDto.getProductById(id);
     }
 
     @Override
     public void insertProduct(Product product) {
-        productRepository.save(product);
+        productDto.insertProduct(product);
     }
 
     @Override
-    public void updateProduct(Product product) {
-        productRepository.save(product);
-    }
-
-    @Override
-    public void deleteProduct(String productId) {
-        productRepository.deleteById(productId);
-    }
-
-    @Override
-    public Product getProductById(String productId) {
-        return productRepository.findById(productId).orElse(null);
+    public void deleteProduct(String id) {
+        productDto.deleteProduct(id);
     }
 }
