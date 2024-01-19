@@ -1,61 +1,71 @@
-package com.praveen.sample.service;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+    package com.praveen.sample.service;
 
-import com.praveen.sample.dto.ProductDto;
-import com.praveen.sample.model.Product;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.data.mongodb.core.MongoTemplate;
+    import org.springframework.data.mongodb.core.query.Criteria;
+    import org.springframework.data.mongodb.core.query.Query;
+    import org.springframework.stereotype.Service;
 
-import org.bson.types.ObjectId;
+    import com.praveen.sample.dto.ProductDto;
+    import com.praveen.sample.model.Product;
+    import com.praveen.util.ProductCodeGen;
 
-import java.util.List;
+    import java.util.List;
 
-@Service
-public class ProductServiceImpl implements ProductService {
+    @Service
+    public class ProductServiceImpl implements ProductService {
 
-    @Autowired
-    private ProductDto productDto;
+        @Autowired
+        private ProductDto productDto;
 
-    @Override
-    public List<Product> getAllProducts() {
-        return productDto.getAllProducts();
-    }
+        @Autowired
+        private MongoTemplate mongoTemplate;
 
-    @Override
-    public Product getProductById(String id) {
-        return productDto.getProductById(id);
-    }
+        @Override
+        public List<Product> getAllProducts() {
 
-    @Override
-    public void insertProduct(Product product) {
-        productDto.insertProduct(product);
-    }
-
-    @Override
-    public void deleteProduct(String id) {
-        productDto.deleteProduct(id);
-    }
-
-    @Override
-    public void updateProduct(String id, Product updatedProduct) {
-        ObjectId objectId;
-        try {
-            objectId = new ObjectId(id);
-        } catch (Exception e) {
-            // Handle the exception (invalid ObjectId)
-            return;
+            Query query = new Query(Criteria.where("deleted").ne(true));
+            return mongoTemplate.find(query, Product.class);
         }
 
-        Product existingProduct = productDto.getProductById(id);
-        if (existingProduct != null) {
-            existingProduct.setName(updatedProduct.getName());
-            existingProduct.setCode(updatedProduct.getCode());
-            existingProduct.setPrice(updatedProduct.getPrice());
-            existingProduct.setDescription(updatedProduct.getDescription());
-            existingProduct.setImageUrl(updatedProduct.getImageUrl());
-            existingProduct.setCompanyName(updatedProduct.getCompanyName());
-            existingProduct.setInStock(updatedProduct.isInStock());
+        @Override
+        public Product getProductById(String id) {
 
-            productDto.insertProduct(existingProduct); // Save the updated product
+            Query query = new Query(Criteria.where("_id").is(id).and("deleted").ne(true));
+            return mongoTemplate.findOne(query, Product.class);
+        }
+
+        @Override
+        public void insertProduct(Product product) {
+            String prodString = ProductCodeGen.generateProductCode(product.getName());
+            product.setCode(prodString);
+            productDto.insertProduct(product);
+        }
+
+        @Override
+        public void deleteProduct(String id) {
+            Product product = getProductById(id);
+            if (product != null) {
+
+                product.setDeleted(true);
+                mongoTemplate.save(product);
+            }
+        }
+
+        @Override
+        public void updateProduct(String id, Product updatedProduct) {
+
+            Product existingProduct = getProductById(id);
+            if (existingProduct != null && !existingProduct.isDeleted()) {
+                existingProduct.setName(updatedProduct.getName());
+                existingProduct.setCode(updatedProduct.getCode());
+                existingProduct.setPrice(updatedProduct.getPrice());
+                existingProduct.setDescription(updatedProduct.getDescription());
+                existingProduct.setImageUrl(updatedProduct.getImageUrl());
+                existingProduct.setCompanyName(updatedProduct.getCompanyName());
+                existingProduct.setInStock(updatedProduct.isInStock());
+
+                productDto.insertProduct(existingProduct);
+            }
         }
     }
-}
