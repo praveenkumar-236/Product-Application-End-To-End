@@ -9,34 +9,41 @@ import com.praveen.sample.service.ProductService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    @GetMapping
+    @PostMapping("/createProduct")
+    public Product createProduct(@RequestBody Product product) {
+        productService.insertProduct(product);
+        return product; 
+    }
+
+    @GetMapping("/getAllProducts")
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("getById/{id}")
     public Product getProductById(@PathVariable String id) {
         return productService.getProductById(id);
     }
 
-    @PostMapping
-    public void insertProduct(@RequestBody Product product) {
-        productService.insertProduct(product);
-    }
+   
 
     @PutMapping("/{id}")
     public void updateProduct(@PathVariable String id, @RequestBody Product product) {
-        // Implement update logic here
-    }
+        
 
-    @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable String id) {
+        //need to implenet
+            }
+
+    @DeleteMapping("deleteById/{id}")
+    public Product deleteProduct(@PathVariable String id) {
+        Product deletedProduct = productService.getProductById(id); 
         productService.deleteProduct(id);
+        return deletedProduct; 
     }
 }
