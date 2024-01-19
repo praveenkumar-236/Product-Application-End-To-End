@@ -1,59 +1,106 @@
-package com.praveen.sample.model;
+    package com.praveen.sample.model;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+    import org.springframework.data.annotation.Id;
+    import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
-@Document(collection = "Products")
-public class Product {
+    @Document(collection = "products")
+    public class Product {
+        @Id
+        private String _id;
+        private String name;
+        private String code;
+        private double price;
+        private String description;
+        private String imageUrl;
+        private String companyName;
+        private boolean inStock = false;
+        private boolean deleted = false;
 
-    @Id
-    private String productId;
 
-    private String productName;
-    private String productDescription;
+        /* Constructors */
+        public Product(String _id, String name, String code, double price, String description, String imageUrl,
+                String companyName, boolean inStock) {
+            this._id = _id;
+            this.name = name;
+            this.code = code;
+            this.price = price;
+            this.description = description;
+            this.imageUrl = imageUrl;
+            this.companyName = companyName;
+            this.inStock = inStock;
+        }
 
-    public Product() {
+        /* Getters And Setters */
+        public String get_id() {
+            return _id;
+        }
+
+        public void set_id(String _id) {
+            this._id = _id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public void setPrice(double price) {
+            this.price = price;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        public String getCompanyName() {
+            return companyName;
+        }
+
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
+        }
+
+        public boolean isInStock() {
+            return inStock;
+        }
+
+        public void setInStock(boolean inStock) {
+            this.inStock = inStock;
+        }
+
+        public boolean isDeleted() {
+            return deleted;
+        }
+
+        public void setDeleted(boolean deleted) {
+            this.deleted = deleted;
+        }
+
     }
-
-    public Product(String productName, String productDescription) {
-        this.productName = productName;
-        this.productDescription = productDescription;
-    }
-
-    // Getters and setters
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getProductDescription() {
-        return productDescription;
-    }
-
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "productId='" + productId + '\'' +
-                ", productName='" + productName + '\'' +
-                ", productDescription='" + productDescription + '\'' +
-                '}';
-    }
-}

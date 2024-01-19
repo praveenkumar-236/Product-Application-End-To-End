@@ -1,14 +1,12 @@
-package com.praveen.sample.service;
+    package com.praveen.sample.service;
+    import java.util.List;
 
-import java.util.List;
+    import com.praveen.sample.model.Product;
 
-import com.praveen.sample.model.Product;
-
-public interface ProductService {
-
-    Product saveProduct(Product product);
-    Product updateProduct(Product product);
-    List<Product> getAllProducts();
-    Product getProduct(String productId);
-    void deleteProduct(String productId);
-}
+    public interface ProductService {
+        List<Product> getAllProducts();
+        Product getProductById(String id);
+        void insertProduct(Product product);
+        void deleteProduct(String id);
+        void updateProduct(String id, Product updatedProduct);
+    }
