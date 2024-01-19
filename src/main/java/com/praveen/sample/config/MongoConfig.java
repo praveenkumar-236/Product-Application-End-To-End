@@ -14,13 +14,13 @@ public class MongoConfig {
     @Value("${spring.data.mongodb.uri}")
     private String mongoUri;
 
-    @Bean
+        @Bean
     public MongoClient mongoClient() {
         return MongoClients.create(new ConnectionString(mongoUri));
     }
 
     @Bean
     public MongoTemplate mongoTemplate() {
-        return new MongoTemplate(mongoClient(), "mydatabase");
+        return new MongoTemplate(mongoClient(), "Product-Collection");
     }
 }

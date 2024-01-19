@@ -14,7 +14,7 @@
 			2.1.6.RELEASE
 		</version>
 		<relativePath />
-		<!-- lookup parent from repository -->
+		
 	</parent>
 	<groupId>
 		com.praveen
@@ -126,7 +126,7 @@
 				test
 			</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.sendgrid/sendgrid-java -->
+		
 		<dependency>
 			<groupId>
 				com.sendgrid
@@ -149,7 +149,7 @@
 				8.30.0
 			</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		
 		<dependency>
 			<groupId>
 				org.apache.httpcomponents
@@ -246,7 +246,7 @@
 <dependency>
     <groupId>org.mongodb</groupId>
     <artifactId>mongodb-driver-sync</artifactId>
-    <version>4.3.0</version> <!-- Use the latest version available -->
+    <version>4.3.0</version>
 </dependency>
 		<dependency>
 			<groupId>
