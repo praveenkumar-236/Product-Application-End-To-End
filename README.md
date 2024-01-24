@@ -16,15 +16,15 @@ Clone the repository:
 
 bash
 Copy code
-git clone https://github.com/your-username/spring-crud-sample.git
-Open the project in your favorite Java IDE (e.g., IntelliJ IDEA, Eclipse).
+git clone https://github.com/praveenkumar-236/Product-Application-End-To-End.git
+Open the project in your favorite Java IDE (e.g.,Vs Code, IntelliJ IDEA, Eclipse).
 
 Build and run the application.
 
 bash
 Copy code
 mvn spring-boot:run
-Access the application using the base URL: http://localhost:8080
+Access the application using the base URL: http://localhost:5000
 
 API Endpoints
 Create Product
